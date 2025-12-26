@@ -234,7 +234,7 @@ class KambiosGUI(QWidget):
         reply = QMessageBox.question(
             self,
             "Confirmar",
-            f"¿Renombrar {len(self.rename_plan)} archivo(s)?\n¡Esta acción no se puede deshacer... o sí? 😏",
+            f"¿Renombrar {len(self.rename_plan)} archivo(s)?\nEsta acción no se puede deshacer... O quizás sí 😎",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
         )
         if reply == QMessageBox.StandardButton.Yes:
