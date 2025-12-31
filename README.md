@@ -2,7 +2,7 @@ ES:
 
 === KAMBIOS ===
 
-Un renombrador de archivos muy chiquito y muy básico hecho en Python, con versión CLI y GUI (PyQt6).
+Un renombrador de archivos muy chiquito y muy básico hecho en Python 3.13.11, con versión CLI y GUI (PyQt6).
 
 Es un programa muy básico que puede hacer tres cosas:
 
