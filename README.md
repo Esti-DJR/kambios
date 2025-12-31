@@ -20,7 +20,7 @@ EN:
 
 === KAMBIOS ===
 
-A very small, very basic, CLI + GUI (PyQt6) file renamer, done in Python.
+A very small, very basic, CLI + GUI (PyQt6) file renamer, done in Python 3.13.11.
 
 This is just a basic file renamer that does three things:
 
