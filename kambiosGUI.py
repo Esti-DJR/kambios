@@ -4,6 +4,11 @@ import sys
 import os
 import json
 import time
+
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = ""
+os.environ["QT_QPA_PLATFORM"] = "xcb"
+os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.qpa.plugin.debug=false;kf.kio.core.warning=false"
+
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
     QLabel, QLineEdit, QTextEdit, QFileDialog, QMessageBox, QGroupBox,
@@ -112,7 +117,11 @@ class KambiosGUI(QWidget):
         self.setLayout(layout)
 
     def select_folder(self):
-        folder = QFileDialog.getExistingDirectory(self, "Seleccionar carpeta")
+        folder = QFileDialog.getExistingDirectory(
+            self,
+            "Seleccionar carpeta",
+            options=QFileDialog.Option.DontUseNativeDialog
+        )
         if folder:
             self.folder_path = folder
             self.folder_line.setText(folder)
@@ -161,7 +170,7 @@ class KambiosGUI(QWidget):
             self.preview_table.setItem(row, 1, QTableWidgetItem(new))
         self.apply_button.setEnabled(True)
 
-    # === MÉTODOS DE VISTA PREVIA (AHORA COMPLETOS) ===
+    # Vista previa
 
     def preview_number(self):
         if not self.folder_path:
@@ -184,7 +193,7 @@ class KambiosGUI(QWidget):
         except Exception as e:
             self.show_error(f"Error al generar vista previa:\n{str(e)}")
 
-    def preview_full_replace(self):  # ✅ ¡ESTE FALTABA!
+    def preview_full_replace(self):
         if not self.folder_path:
             self.show_error("Selecciona una carpeta primero.")
             return
@@ -205,7 +214,7 @@ class KambiosGUI(QWidget):
         except Exception as e:
             self.show_error(f"Error al generar vista previa:\n{str(e)}")
 
-    def preview_part_replace(self):  # ✅ ¡Y ESTE TAMBIÉN DEBE ESTAR!
+    def preview_part_replace(self):
         if not self.folder_path:
             self.show_error("Selecciona una carpeta primero.")
             return
@@ -227,7 +236,7 @@ class KambiosGUI(QWidget):
         except Exception as e:
             self.show_error(f"Error al generar vista previa:\n{str(e)}")
 
-    # === APLICAR Y DESHACER ===
+    # Aplicar y deshacer
 
     def apply_renames(self):
         if not self.rename_plan:
@@ -254,7 +263,7 @@ class KambiosGUI(QWidget):
                 with open(undo_path, "w", encoding="utf-8") as f:
                     json.dump(undo_data, f, indent=2, ensure_ascii=False)
 
-                self.show_info("Éxito", "¡Archivos renombrados! Puedes deshacer desde esta carpeta.")
+                self.show_info("Éxito", "Archivos renombrados. Puedes deshacer desde esta carpeta.")
                 self.update_file_list()
                 self.clear_preview()
                 self.check_undo_file()
@@ -308,3 +317,4 @@ if __name__ == '__main__':
     window = KambiosGUI()
     window.show()
     sys.exit(app.exec())
+
